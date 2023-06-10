@@ -6,11 +6,12 @@
          <input type="text"  class="form-control"
         #serverNameInput >
         <label >Server content</label>
-        <input type="text"  class="form-control" [(ngModel)]="newServerContent">
+        <!-- <input type="text"  class="form-control" [(ngModel)]="newServerContent"> -->
+        <input type="text"  class="form-control" #serverContentInput>
         <br>
         <button class = "btn brn-primary" (click)="onAddServer(serverNameInput)"> Add Server </button>
 
-        <button class="btn btn-primary" (click)="onAddBlueprint(serverNameInput)" >Add sever blueprint</button>
+         <button class="btn btn-primary" (click)="onAddBlueprint(serverNameInput)" >Add sever blueprint</button> 
 
     </div>
 </div>
