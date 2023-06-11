@@ -1,3 +1,6 @@
 
-<!-- <button class="btn btn-primar">Push</button> -->
-<app-child [messege]="Parentmessege"></app-child>
+ <!-- <button class="btn btn-primary" >Push</button>  -->
+<!-- <app-child [messege]="Parentmessege"></app-child> -->
+
+<input type="text" [(ngModel)]="Parentmessage" (ngModelChange)="onParentmsgChange($event)">
+<app-child message="Parentmessege"></app-child>
