@@ -8,9 +8,18 @@ import { Component } from '@angular/core';
 export class AppComponent {
   // title = 'communication';
   // Parentmessege = 'messege from parent';
-  Parentmessage="Hello from parent"
+  // Parentmessage="Hello from parent"
 
-  onParentmsgChange(newMessage: string){
-    console.log('parent msg changed', newMessage)
+  // onParentmsgChange(newMessage: string){
+  //   console.log('parent msg changed', newMessage)
+childMessage: any;
+
+  onChildEvent(message: any){
+      this.childMessage=message;
   }
-}
+
+
+
+
+  }
+
