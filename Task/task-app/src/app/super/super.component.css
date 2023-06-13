@@ -1,0 +1,13 @@
+.btn-primary{
+    margin-bottom: 5px; 
+   padding:10px 10px;
+}
+.btn-secondary{
+    margin: 5px 5px; 
+   padding-top: 5px 5px;
+}
+.btn-danger{
+    margin: 5px 5px;
+   padding-top: 8px;
+   /* padding-to: 5px; */
+}
