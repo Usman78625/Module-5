@@ -3,6 +3,8 @@
     <button class="btn btn-secondary" (click)="onOptionSelect('Tasks')">Tasks</button>
     <button class="btn btn-danger" (click)="onOptionSelect('Issues')">Issues</button>
   </div>
-  <app-stakeholder *ngIf="selectedOption === 'Stakeholder'" [data]="data.stakeholder" ></app-stakeholder>
-  <app-tasks *ngIf="selectedOption === 'Tasks'" [data]="data.tasks"></app-tasks>
-  <app-issues *ngIf="selectedOption === 'Issues'" [data]="data.issue"></app-issues>  
+  <h3 *ngIf="option">Option Selected: {{option}}</h3>
+  <app-stakeholder *ngIf="selectedOption === 'Stakeholder'" [data]="data.stakeholder"  (stakeholderOption)="optionChange($event)"></app-stakeholder>
+
+  <app-tasks *ngIf="selectedOption === 'Tasks'" [data]="data.tasks"  (taskOption)="optionChange($event)"></app-tasks>
+  <app-issues *ngIf="selectedOption === 'Issues'" [data]="data.issue"  (IssueOption)="optionChange($event)"></app-issues>  

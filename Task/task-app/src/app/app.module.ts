@@ -7,6 +7,7 @@ import { StakeholderComponent } from './stakeholder/stakeholder.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { IssuesComponent } from './issues/issues.component';
 import { SelectComponent } from './slect/slect.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SelectComponent } from './slect/slect.component';
     SelectComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

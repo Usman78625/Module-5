@@ -10,6 +10,8 @@ export class SuperComponent implements OnInit {
   data = {'stakeholder': ['Nouman', 'Mohsin','Usman'],
           'tasks':['task1','task2', 'task3'],
            'issue': ['issue1','issue2','issue3']} 
+
+  option: string = '';
   
 
   ngOnInit(): void {
@@ -19,5 +21,10 @@ export class SuperComponent implements OnInit {
 
   onOptionSelect(option: string) {
     this.selectedOption = option;
+  }
+
+  optionChange(option: any) {
+    console.log(option)
+    this.option = option;
   }
 }
