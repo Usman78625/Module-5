@@ -17,7 +17,7 @@ export class ServersComponent implements OnInit {
     this.servers = this.serversService.getServers();
   }
   onReload(){
-  this.router.navigate(['/servers'], {relativeTo: this.route} );
+  // this.router.navigate(['/servers'], {relativeTo: this.route} );
   }
   // unlike router link navigate method dont know on which page you are currently
   // to get  acces to current active route inject activated route
