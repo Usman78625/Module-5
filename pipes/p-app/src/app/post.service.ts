@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { post } from './post.modal';
-import { map } from 'rxjs';
+import { Subject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
+  error = new Subject<string>();
 
   constructor(private http: HttpClient) { }
 
@@ -15,6 +16,9 @@ export class PostService {
     this.http.post<{name: string}>('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json',postData).subscribe(
       responseData => {
         console.log(responseData);
+      },
+      error => {
+        this.error.next(error.message);
       }
     )
   }
