@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { post } from './post.modal';
+import { PostService } from './post.service';
 
 @Component({
   selector: 'app-root',
@@ -12,48 +13,29 @@ export class AppComponent implements OnInit {
   loadedPosts: post[] =  [];
   isFetching = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private postService: PostService) {}
 
   ngOnInit() {
-    this.fetchPosts();
+    this.postService.fetchPosts();
   }
 
   onCreatePost(postData: post) {
     // Send Http request
-    this.http.post<{name: string}>('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json',postData).subscribe(
-      responseData => {
-        console.log(responseData);
-      }
-    )
+    this.postService.createandStorePost(postData.title, postData.content)
   }
 
   onFetchPosts() {
     // Send Http request
-    this.fetchPosts();
+    this.postService.fetchPosts();
+    // this.isFetching = false;
+    // this.loadedPosts = posts;
   }
 
   onClearPosts() {
     // Send Http request
   }
-  private fetchPosts() {
-    this.isFetching = true;
-    this.http.get<{ [x: string]: post }>('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json')
-      .pipe(
-        map((responseData: { [x: string]: post }) => {
-          const postArray: post[] = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              postArray.push({ ...responseData[key], id: key });
-            }
-          }
-          return postArray;
-        })
-      )
-      .subscribe(posts => {
-        // console.log(posts);
-        this.isFetching = false;
-        this.loadedPosts = posts;
-      });
-  }
+  // private fetchPosts() {
+    
+  // }
   
 }
