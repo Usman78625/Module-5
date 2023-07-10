@@ -37,5 +37,8 @@ export class PostService {
        
       // });
   }
+  deletePost(){
+    return this.http.delete('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json');
+  }
 }
 
