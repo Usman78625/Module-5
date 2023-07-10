@@ -20,7 +20,7 @@ export class PostService {
   }
   fetchPosts(){
     // this.isFetching = true;
-    this.http.get<{ [x: string]: post }>('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json')
+   return this.http.get<{ [x: string]: post }>('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json')
       .pipe(
         map((responseData: { [x: string]: post }) => {
           const postArray: post[] = [];
@@ -32,10 +32,10 @@ export class PostService {
           return postArray;
         })
       )
-      .subscribe(posts => {
-        // console.log(posts);
+      // .subscribe(posts => {
+      //   // console.log(posts);
        
-      });
+      // });
   }
 }
 
