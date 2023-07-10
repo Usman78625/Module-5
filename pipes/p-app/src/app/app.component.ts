@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -32,9 +33,22 @@ export class AppComponent implements OnInit {
   onClearPosts() {
     // Send Http request
   }
-  private fetchPosts(){
-    this.http.get('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json').subscribe(posts => {
-      console.log(posts);
-    })
+  private fetchPosts() {
+    this.http.get('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json')
+      .pipe(
+        map((responseData: { [x: string]: any }) => {
+          const postArray = [];
+          for (const key in responseData) {
+            if (responseData.hasOwnProperty(key)) {
+              postArray.push({ ...responseData[key], id: key });
+            }
+          }
+          return postArray;
+        })
+      )
+      .subscribe(posts => {
+        console.log(posts);
+      });
   }
+  
 }
