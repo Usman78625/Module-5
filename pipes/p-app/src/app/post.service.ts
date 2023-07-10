@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { post } from './post.modal';
-import { Subject, map } from 'rxjs';
+import { Subject, catchError, map, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +34,9 @@ export class PostService {
             }
           }
           return postArray;
+        }),
+        catchError(errorRes =>{
+        return  throwError(errorRes);
         })
       )
       // .subscribe(posts => {
