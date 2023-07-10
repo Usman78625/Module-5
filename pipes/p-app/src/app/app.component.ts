@@ -10,6 +10,7 @@ import { post } from './post.modal';
 })
 export class AppComponent implements OnInit {
   loadedPosts: post[] =  [];
+  isFetching = false;
 
   constructor(private http: HttpClient) {}
 
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit {
     // Send Http request
   }
   private fetchPosts() {
+    this.isFetching = true;
     this.http.get<{ [x: string]: post }>('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json')
       .pipe(
         map((responseData: { [x: string]: post }) => {
@@ -49,6 +51,7 @@ export class AppComponent implements OnInit {
       )
       .subscribe(posts => {
         // console.log(posts);
+        this.isFetching = false;
         this.loadedPosts = posts;
       });
   }
