@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { post } from './post.modal';
 import { Subject, catchError, map, throwError } from 'rxjs';
@@ -24,8 +24,12 @@ export class PostService {
   }
   fetchPosts(){
     // this.isFetching = true;
+    let searchParams = new HttpParams();
+    searchParams = searchParams.append('print', 'pretty');
+    searchParams = searchParams.append('custom', 'key');
    return this.http.get<{ [x: string]: post }>('https://ng-template-1-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json' , {
-    headers: new HttpHeaders({ 'Custom-Header': 'Hello' })
+    headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
+    params: searchParams
    })
       .pipe(
         map((responseData: { [x: string]: post }) => {
