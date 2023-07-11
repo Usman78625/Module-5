@@ -48,6 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isFetching = false;
       this.loadedPosts = posts;
     }, error =>{
+      this.isFetching = false;
       this.error = error.message;
     });
   }
@@ -56,9 +57,17 @@ export class AppComponent implements OnInit, OnDestroy {
   this.postService.deletePost().subscribe(() =>{
     this.loadedPosts = [];
   });
+  
+}
+onhandleError(){
+  this.error = '';
 }
 ngOnDestroy(): void {
   this.errorSub.unsubscribe();
 }
   
 }
+function onHandleError() {
+  throw new Error('Function not implemented.');
+}
+
