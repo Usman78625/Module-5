@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 // import { Recipe } from "../recipes/recipe.model";
 import { RecipeService } from "../recipes/recipe.service";
 import { Recipe } from "../recipes/recipe.model";
+import { map } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -19,9 +20,18 @@ storeRecipes( ){
 }
 
 fetchRecipes(){
-    this.http.get<Recipe[]>('https://ng-course-project-d9f93-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json').subscribe(recipes =>{
-        this.recipeService.setRecipes(recipes)
-    })
+    this.http.get<Recipe[]>('https://ng-course-project-d9f93-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json').pipe(
+        map(recipes =>{
+            return recipes.map(recipe =>{
+                return{
+                    ...recipe,
+                    ingredients: recipe.ingredients ? recipe.ingredients : []
+                };
+            });
+        }))
+        .subscribe(recipess =>{
+            this.recipeService.setRecipes(recipess)
+        })
+    
 }
-
-}
+ }
