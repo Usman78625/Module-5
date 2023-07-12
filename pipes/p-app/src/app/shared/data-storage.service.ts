@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 // import { Recipe } from "../recipes/recipe.model";
 import { RecipeService } from "../recipes/recipe.service";
+import { Recipe } from "../recipes/recipe.model";
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,12 @@ storeRecipes( ){
  recipes).subscribe(respose =>{
     console.log(respose)
  })
+}
+
+fetchRecipes(){
+    this.http.get<Recipe[]>('https://ng-course-project-d9f93-default-rtdb.asia-southeast1.firebasedatabase.app/recipes.json').subscribe(recipes =>{
+        this.recipeService.setRecipes(recipes)
+    })
 }
 
 }
