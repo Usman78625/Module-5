@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { DataStorageService } from '../shared/data-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -6,18 +7,10 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 })
 export class HeaderComponent {
 
-  // constructor() { }
+  constructor(private dataStorageService: DataStorageService) { }
 
-  // ngAfterViewInit() {
-  //   // Initialize Bootstrap dropdown component
-  //   const dropdownElement = this.dropdownMenu.nativeElement;
-  //   const dropdownToggle = dropdownElement.querySelector('.dropdown-toggle');
-
-  //   if (dropdownToggle) {
-  //     dropdownToggle.addEventListener('click', function () {
-  //       dropdownElement.classList.toggle('show');
-  //     });
-  //   }
-  // }
+  onSaveData(){
+this.dataStorageService.storeRecipes();
+  }
 
 }
