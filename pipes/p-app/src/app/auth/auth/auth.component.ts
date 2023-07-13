@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from './auth.service';
+import { AuthResponseData, AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -8,43 +9,44 @@ import { AuthService } from './auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-constructor(private authService: AuthService){}
-isLoading = false;
-error: string = '';
-isLoginMode = true;
-
-onSwitchMode(){
-  this.isLoginMode = !this.isLoginMode;
-}
-
-onSubmit(form: NgForm){
-if( !form.valid) {
-  return
-}
-
-const email = form.value.email;
-const password = form.value.password;
-this.isLoading = true;
-
-if (this.isLoginMode){
-
-}
-else{
-  this.authService.SignUp(email,password).subscribe(resData =>{
-    console.log(resData);
-    this.isLoading = false;
-  }, errorMsg => {
-    console.log(errorMsg);
-    this.error = errorMsg;
-    // this.errorRes = 'An error occured'
-    this.isLoading = false;
-  }
+  constructor(private authService: AuthService) {}
   
-  );
-}
+  isLoading = false;
+  error: string = '';
+  isLoginMode = true;
 
+  onSwitchMode() {
+    this.isLoginMode = !this.isLoginMode;
+  }
 
-form.reset();
-}
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
 
+    const email = form.value.email;
+    const password = form.value.password;
+    this.isLoading = true;
+    let authObs: Observable<AuthResponseData>;
+
+    if (this.isLoginMode) {
+      authObs = this.authService.Login(email, password);
+    } else {
+      authObs = this.authService.SignUp(email, password);
+    }
+
+    authObs.subscribe(
+      resData => {
+        console.log(resData);
+        this.isLoading = false;
+      },
+      errorMsg => { // Fix: Corrected the arrow function syntax
+        console.log(errorMsg);
+        this.error = errorMsg;
+        this.isLoading = false;
+      }
+    );
+
+    form.reset();
+  }
 }
