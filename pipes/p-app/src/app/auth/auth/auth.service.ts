@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, throwError } from "rxjs";
+import { Subject, catchError, tap, throwError } from "rxjs";
+import { User } from "./user.modal";
 
  export interface AuthResponseData {
     kind: string;
@@ -14,6 +15,10 @@ import { catchError, throwError } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  // storing authanticated user as a subject
+  // emit a new user
+user = new Subject<User>();
+
      errorMsg!: string;
  constructor(private http: HttpClient){}
 
@@ -23,18 +28,39 @@ return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/
     password: password,
     returnSecureToken: true 
 } 
-).pipe(catchError(this.handleError )
-  
-);
+).pipe(catchError(this.handleError ), tap(resData => {
+  this.handleAuthentication(
+    resData.email,
+    resData.localId,
+    resData.idToken,
+    +resData.expiresIn
+  )
+})
+)
 
 }
+private handleAuthentication(email: string, token: string, userid: string, expiresIn: number){
+  const expirationDate = new Date(new Date().getTime() + expiresIn*1000);
+  const user = new User (email, userid, token, expirationDate,
+    );
+    // emitting currently logged in user using subject
+    this.user.next(user);
+}
+
 Login(email: string, password: string){
  return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAH-oqRicUJ5LBsfPe00TsdDRNtrUdseYs', {
   email: email,
   password: password,
   returnSecureToken: true 
 } )
-   .pipe(catchError(this.handleError ))
+   .pipe(catchError(this.handleError ),tap(resData => {
+    this.handleAuthentication(
+      resData.email,
+      resData.localId,
+      resData.idToken,
+      +resData.expiresIn
+    )
+  }))
 }
 private handleError(errorRes: HttpErrorResponse){
   let errorMsg = 'An unknown error occurred';
