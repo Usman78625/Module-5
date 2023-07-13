@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthResponseData, AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -10,7 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   
   isLoading = false;
   error: string = '';
@@ -40,6 +41,8 @@ export class AuthComponent {
       resData => {
         console.log(resData);
         this.isLoading = false;
+        this.router.navigate(['/recipes'])
+
       },
       errorMsg => { // Fix: Corrected the arrow function syntax
         console.log(errorMsg);
